@@ -1,0 +1,132 @@
+/* resets */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  overflow-x: hidden;
+}
+
+ul {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  background: none;
+}
+
+/* colors */
+
+/* styling */
+body {
+  /* background: linear-gradient(to top right, #010, #000); */
+  background: ivory;
+  font-family: 'Nunito Sans Normal', sans-serif;
+  color: #111110;
+  height: 100vh;
+  padding: 0 1rem;
+}
+
+h1 {
+  font-family: 'Nunito Sans Normal', cursive;
+  /* text-align: center; */
+  font-size: 3rem;
+  margin-bottom: 5rem;
+}
+
+.contact {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 10% 90%;
+  border: 1px solid #2f4f4f;
+  border-left: none;
+  border-right: none;
+  padding: 1.5rem;
+  transition: all 0.5s;
+}
+
+.contact:hover {
+  background: #c4ecec;
+  cursor: pointer;
+}
+
+.contact-picture {
+  width: 4rem;
+  border-radius: 40px;
+}
+
+.contact-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-name {
+  font-size: 2rem;
+}
+
+.contact-last--message {
+  font-size: 1.4rem;
+  color: #10100dad;
+}
+
+.messages-panel {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 10% 90%;
+  align-items: center;
+  margin-bottom: 5rem;
+  background-color: rgba(44, 48, 44, 0.891);
+  color: antiquewhite;
+  padding: 1.2rem 0.5rem;
+}
+
+.messages-panel--details {
+  display: flex;
+  flex-direction: column;
+}
+
+#messenger {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+#back {
+  font-size: 2.5rem;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+#messenger-details {
+  font-size: 1.2rem;
+}
+
+.message {
+  width: 50vw;
+  border: 2px solid green;
+  border-radius: 3%;
+  height: 10rem;
+  padding-top: 1rem;
+  padding-left: 1rem;
+  font-size: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.reply {
+  width: 50vw;
+  background: rgba(13, 196, 13, 0.87);
+  color: ivory;
+  border-radius: 3%;
+  height: 10rem;
+  padding-top: 1rem;
+  padding-left: 1rem;
+  font-size: 1.5rem;
+  margin-bottom: 3rem;
+  float: right;
+}
