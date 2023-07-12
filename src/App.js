@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { PaperPlaneTilt, UserPlus, Plus } from '@phosphor-icons/react';
+import { PaperPlaneTilt, UserPlus, MessengerLogo } from '@phosphor-icons/react';
 
 const data = [
   {
@@ -34,7 +34,6 @@ export default function App() {
     setContactsInfo((current) => {
       return [...current, contact];
     });
-    console.log(contactsInfo);
   }
 
   function handleContactMessageEdit(text) {
@@ -89,6 +88,12 @@ function Home({ contactsInfo, onSelectContact, onSetContactsInfo }) {
 
   return (
     <>
+      {isDisplayForm ? (
+        <div className="overlay" onClick={handleDisplayForm}></div>
+      ) : (
+        ''
+      )}
+
       <NavPanel tab={selectedTab} onsetTab={setSelectedTab} />
 
       {selectedTab === 1 ? (
@@ -115,8 +120,17 @@ function Home({ contactsInfo, onSelectContact, onSetContactsInfo }) {
         ''
       )}
 
-      <button id="contact-add--button" onClick={() => setIsDisplayForm(true)}>
-        <UserPlus size={30} color="#f5f0f0" weight="fill" />{' '}
+      <button id="contact-add--button">
+        {selectedTab === 1 ? (
+          <UserPlus
+            size={30}
+            color="#f5f0f0"
+            weight="fill"
+            onClick={() => setIsDisplayForm(true)}
+          />
+        ) : (
+          <MessengerLogo size={30} color="#f5f0f0" weight="fill" />
+        )}
       </button>
     </>
   );
@@ -166,9 +180,7 @@ function Form({ displayForm, onSetDisplayForm, onFormSubmit }) {
           onChange={(e) => setNumber(e.target.value)}
         />
       </div>
-      <button type="submit">
-        <Plus size={25} color="#f5f0f0" weight="fill" />
-      </button>
+      <button type="submit">Add </button>
     </form>
   );
 }
@@ -307,7 +319,7 @@ function InputMessage({ contact, onContactMessageEdit }) {
           onChange={(e) => setText(e.target.value)}
         />
         <button>
-          <PaperPlaneTilt size={30} color="#f5f0f0" weight="fill" />
+          <PaperPlaneTilt size={23} color="#f5f0f0" weight="fill" />
         </button>
       </form>
     </div>

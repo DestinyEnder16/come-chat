@@ -26,7 +26,7 @@ button {
 /* colors */
 :root {
   --app-theme: #01a;
-  --app-secondaryTheme: rgba(130, 140, 233, 0.615);
+  --app-secondaryTheme: rgba(67, 85, 242, 0.829);
   --text-color: #fffff0;
 }
 
@@ -41,8 +41,9 @@ body {
 }
 
 .app {
-  height: 100%;
+  height: 95vh;
   overflow-y: auto;
+  overflow-x: clip;
 }
 
 nav {
@@ -59,8 +60,8 @@ nav h1 {
   font-family: 'Satisfy', 'Yellowtail', cursive;
   /* text-align: center; */
   font-size: 3rem;
-  margin-top: 3rem;
-  margin-bottom: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 1.7rem;
   margin-left: 1rem;
 }
 
@@ -132,6 +133,10 @@ nav h1 {
 }
 
 .contact-add--form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50%;
   background: var(--app-secondaryTheme);
   width: 90vw;
   margin: 0 auto;
@@ -150,6 +155,18 @@ nav h1 {
   opacity: 1;
   pointer-events: all;
   transform: translateY(0);
+  z-index: 5000;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '';
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(17, 17, 16, 0.695);
+  z-index: 1000;
 }
 
 .contact-add--form div {
@@ -158,7 +175,7 @@ nav h1 {
 
 .contact-add--form label {
   font-size: 1.5rem;
-  font-weight: 500;
+  font-weight: 600;
   margin-right: 1rem;
 }
 
@@ -167,14 +184,22 @@ nav h1 {
   font-family: inherit;
 }
 
+.contact-add--form input:focus {
+  outline: none;
+}
+
 .contact-add--form button {
   width: fit-content;
+  border-radius: 0%;
+  color: var(--text-color);
+  font-family: inherit;
 }
 
 .messages-panel {
   width: 100%;
   display: grid;
   grid-template-columns: 10% 90%;
+  column-gap: 1rem;
   align-items: center;
   margin-bottom: 5rem;
   background-color: var(--app-theme);
@@ -199,7 +224,7 @@ nav h1 {
 }
 
 #messenger-details {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
 }
 
 .message-list {
@@ -214,6 +239,7 @@ nav h1 {
 
 .message {
   width: 45vw;
+  background: aliceblue;
   border: 2px solid var(--app-theme);
   border-radius: 3%;
   height: max-content;
@@ -250,11 +276,15 @@ nav h1 {
 .input-field input {
   background: #1b7070;
   border: none;
-  width: 85%;
-  padding: 1.4rem;
+  width: 80%;
+  padding: 1.2rem;
   font-size: 1.5rem;
   font-family: inherit;
   color: #fff;
+}
+
+.input-field input:focus {
+  outline: none;
 }
 
 .input-field input::placeholder {
