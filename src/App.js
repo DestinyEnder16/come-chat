@@ -31,8 +31,12 @@ export default function App() {
   const [selectedContact, setSelectedContact] = useState(null);
 
   function handleContactMessageEdit(text) {
-    console.log('TRYING TO EDIT!');
-    console.log(selectedContact);
+    // modifying the selected contact's information -- causing a re-render
+    setSelectedContact((selected) => {
+      return { ...selected, replies: [...selected.replies, text] };
+    });
+
+    // updating the contact's messages in the array
     setContactsInfo((contacts) =>
       contacts.map((contact) =>
         selectedContact.id === contact.id
@@ -40,6 +44,7 @@ export default function App() {
           : contact
       )
     );
+
     console.log(contactsInfo);
   }
 
@@ -61,7 +66,7 @@ export default function App() {
       ) : (
         <Message
           contact={selectedContact}
-          onSelectContact={handleSelectContact}
+          onSelectContact={setSelectedContact}
           onContactMessageEdit={handleContactMessageEdit}
         />
       )}
@@ -98,7 +103,9 @@ function Contact({ contact, onSelectContact }) {
       <div className="contact-details">
         <span className="contact-name">{contact.name}</span>
         <span className="contact-last--message">
-          {contact.messages.slice(-1)}
+          {!contact.replies
+            ? contact.messages.slice(-1)
+            : contact.replies.slice(-1)}
         </span>
       </div>
     </li>
@@ -152,6 +159,7 @@ function Message({ contact, onSelectContact, onContactMessageEdit }) {
       <InputMessage
         contact={contact}
         onContactMessageEdit={onContactMessageEdit}
+        onEditContact={onSelectContact}
       />
     </>
   );
