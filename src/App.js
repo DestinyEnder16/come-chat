@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { PaperPlaneTilt } from '@phosphor-icons/react';
+import { PaperPlaneTilt, UserPlus, Plus } from '@phosphor-icons/react';
 
 const data = [
   {
@@ -30,6 +30,13 @@ export default function App() {
   const [contactsInfo, setContactsInfo] = useState(data);
   const [selectedContact, setSelectedContact] = useState(null);
 
+  function handleContactUpdate(contact) {
+    setContactsInfo((current) => {
+      return [...current, contact];
+    });
+    console.log(contactsInfo);
+  }
+
   function handleContactMessageEdit(text) {
     // modifying the selected contact's information -- causing a re-render
     setSelectedContact((selected) => {
@@ -50,13 +57,15 @@ export default function App() {
     setSelectedContact((selected) =>
       selected?.id === contact.id ? null : contact
     );
+    console.log(selectedContact);
   }
 
   return (
     <div className="app">
       {selectedContact === null ? (
-        <ContactPanel
+        <Home
           contactsInfo={contactsInfo}
+          onSetContactsInfo={handleContactUpdate}
           onSelectContact={handleSelectContact}
         />
       ) : (
@@ -66,23 +75,26 @@ export default function App() {
           onContactMessageEdit={handleContactMessageEdit}
         />
       )}
-
-      <main></main>
     </div>
   );
 }
 
-function ContactPanel({ contactsInfo, onSelectContact }) {
+function Home({ contactsInfo, onSelectContact, onSetContactsInfo }) {
   const [selectedTab, setSelectedTab] = useState(1);
+  const [isDisplayForm, setIsDisplayForm] = useState(false);
+
+  function handleDisplayForm() {
+    setIsDisplayForm((cur) => !cur);
+  }
 
   return (
-    <div>
+    <>
       <NavPanel tab={selectedTab} onsetTab={setSelectedTab} />
 
       {selectedTab === 1 ? (
         <ul className="contact-panel">
           {contactsInfo.map((contact) => (
-            <Contact
+            <ContactList
               contact={contact}
               key={crypto.randomUUID()}
               onSelectContact={onSelectContact}
@@ -92,7 +104,67 @@ function ContactPanel({ contactsInfo, onSelectContact }) {
       ) : (
         <h2>Calm down, this is not WhatsApp or something...</h2>
       )}
-    </div>
+
+      <Form
+        displayForm={isDisplayForm}
+        onSetDisplayForm={handleDisplayForm}
+        onFormSubmit={onSetContactsInfo}
+      />
+
+      <button id="contact-add--button" onClick={() => setIsDisplayForm(true)}>
+        <UserPlus size={30} color="#f5f0f0" weight="fill" />{' '}
+      </button>
+    </>
+  );
+}
+
+function Form({ displayForm, onSetDisplayForm, onFormSubmit }) {
+  const [text, setText] = useState('');
+  const [number, setNumber] = useState('');
+
+  return (
+    <form
+      className={displayForm ? 'contact-add--form active' : 'contact-add--form'}
+      onSubmit={(e) => {
+        e.preventDefault();
+        const generatedContact = {
+          name: text,
+          replies: [],
+          messages: [],
+          pfp: '',
+          id: crypto.randomUUID(),
+        };
+
+        onFormSubmit(generatedContact);
+        setText('');
+        setNumber('');
+        onSetDisplayForm();
+      }}
+    >
+      <div>
+        <label>Name</label>
+        <input
+          type="text"
+          placeholder="Enter name here"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          required
+        />
+      </div>
+
+      <div>
+        <label>Phone Number</label>
+        <input
+          type="number"
+          required
+          value={number}
+          onChange={(e) => setNumber(e.target.value)}
+        />
+      </div>
+      <button type="submit">
+        <Plus size={25} color="#f5f0f0" weight="fill" />
+      </button>
+    </form>
   );
 }
 
@@ -128,9 +200,14 @@ function NavPanel({ tab, onsetTab }) {
   );
 }
 
-function Contact({ contact, onSelectContact }) {
+function ContactList({ contact, onSelectContact }) {
   return (
-    <li className="contact" onClick={() => onSelectContact(contact)}>
+    <li
+      className="contact"
+      onClick={() => {
+        onSelectContact(contact);
+      }}
+    >
       <img
         src={contact.pfp}
         alt={`${contact.name} pfp`}

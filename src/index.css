@@ -25,6 +25,7 @@ button {
 /* colors */
 :root {
   --app-theme: #01a;
+  --app-secondaryTheme: rgba(130, 140, 233, 0.615);
   --text-color: #fffff0;
 }
 
@@ -38,12 +39,19 @@ body {
   overflow: hidden;
 }
 
+.app {
+  height: 100%;
+  overflow: auto;
+}
+
 nav {
   background: var(--app-theme);
   color: var(--text-color);
   display: flex;
   flex-direction: column;
   width: 100vw;
+  position: sticky;
+  top: 0;
 }
 
 nav h1 {
@@ -84,7 +92,7 @@ nav h1 {
   width: 100%;
   display: grid;
   grid-template-columns: 10% 90%;
-
+  column-gap: 2rem;
   padding: 1.5rem;
   transition: all 0.5s;
 }
@@ -114,6 +122,52 @@ nav h1 {
 .contact-last--message {
   font-size: 1.4rem;
   color: #10100dad;
+}
+
+#contact-add--button {
+  position: fixed;
+  bottom: 2rem;
+  right: 1rem;
+}
+
+.contact-add--form {
+  background: var(--app-secondaryTheme);
+  width: 90vw;
+  margin: 0 auto;
+  height: max-content;
+  margin-bottom: 3rem;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  transform: translateY(5rem);
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.5s;
+}
+
+.contact-add--form.active {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+
+.contact-add--form div {
+  margin-bottom: 1.5rem;
+}
+
+.contact-add--form label {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-right: 1rem;
+}
+
+.contact-add--form input {
+  padding: 0.5rem;
+  font-family: inherit;
+}
+
+.contact-add--form button {
+  width: fit-content;
 }
 
 .messages-panel {
@@ -161,9 +215,8 @@ nav h1 {
   width: 45vw;
   border: 2px solid var(--app-theme);
   border-radius: 3%;
-  height: 10rem;
-  padding-top: 1rem;
-  padding-left: 1rem;
+  height: max-content;
+  padding: 1rem;
   font-size: 1.5rem;
   margin-bottom: 3rem;
 }
@@ -173,9 +226,8 @@ nav h1 {
   background: var(--app-theme);
   color: ivory;
   border-radius: 3%;
-  height: 10rem;
-  padding-top: 1rem;
-  padding-left: 1rem;
+  height: max-content;
+  padding: 1rem;
   font-size: 1.5rem;
   margin-bottom: 3rem;
 }
@@ -208,7 +260,7 @@ nav h1 {
   color: #ddd;
 }
 
-.input-field button {
+button {
   border: none;
   background: var(--app-theme);
   padding: 0.8rem;
