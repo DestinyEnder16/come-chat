@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Satisfy&family=Titillium+Web:wght@200;300;400&display=swap');
 /* resets */
 * {
   margin: 0;
@@ -33,7 +34,7 @@ button {
 body {
   /* background: linear-gradient(to top right, #010, #000); */
   background: ivory;
-  font-family: 'Nunito Sans Normal', sans-serif;
+  font-family: 'Titillium Web', 'Nunito Sans Normal', sans-serif;
   color: #111110;
   height: 100vh;
   overflow: hidden;
@@ -41,7 +42,7 @@ body {
 
 .app {
   height: 100%;
-  overflow: auto;
+  overflow-y: auto;
 }
 
 nav {
@@ -55,7 +56,7 @@ nav {
 }
 
 nav h1 {
-  font-family: 'Yellowtail', cursive;
+  font-family: 'Satisfy', 'Yellowtail', cursive;
   /* text-align: center; */
   font-size: 3rem;
   margin-top: 3rem;
@@ -203,7 +204,7 @@ nav h1 {
 
 .message-list {
   height: 80vh;
-  overflow: auto;
+  overflow-y: auto;
   padding: 0 0.8rem;
 }
 

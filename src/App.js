@@ -105,11 +105,15 @@ function Home({ contactsInfo, onSelectContact, onSetContactsInfo }) {
         <h2>Calm down, this is not WhatsApp or something...</h2>
       )}
 
-      <Form
-        displayForm={isDisplayForm}
-        onSetDisplayForm={handleDisplayForm}
-        onFormSubmit={onSetContactsInfo}
-      />
+      {selectedTab === 1 ? (
+        <Form
+          displayForm={isDisplayForm}
+          onSetDisplayForm={handleDisplayForm}
+          onFormSubmit={onSetContactsInfo}
+        />
+      ) : (
+        ''
+      )}
 
       <button id="contact-add--button" onClick={() => setIsDisplayForm(true)}>
         <UserPlus size={30} color="#f5f0f0" weight="fill" />{' '}
@@ -127,12 +131,13 @@ function Form({ displayForm, onSetDisplayForm, onFormSubmit }) {
       className={displayForm ? 'contact-add--form active' : 'contact-add--form'}
       onSubmit={(e) => {
         e.preventDefault();
+        const uniqueID = crypto.randomUUID();
         const generatedContact = {
           name: text,
           replies: [],
           messages: [],
-          pfp: '',
-          id: crypto.randomUUID(),
+          pfp: `https://i.pravatar.cc/48?${uniqueID}`,
+          id: uniqueID,
         };
 
         onFormSubmit(generatedContact);
