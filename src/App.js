@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { PaperPlaneTilt } from '@phosphor-icons/react';
 
 const data = [
   {
@@ -28,6 +29,26 @@ const data = [
 export default function App() {
   const [contactsInfo, setContactsInfo] = useState(data);
   const [selectedContact, setSelectedContact] = useState(null);
+
+  function handleContactMessageEdit(text) {
+    console.log('TRYING TO EDIT!');
+    console.log(selectedContact);
+    setContactsInfo((contacts) =>
+      contacts.map((contact) =>
+        selectedContact.id === contact.id
+          ? { ...contact, replies: [...contact.replies, text] }
+          : contact
+      )
+    );
+    console.log(contactsInfo);
+  }
+
+  function handleSelectContact(contact) {
+    setSelectedContact((selected) =>
+      selected?.id === contact.id ? null : contact
+    );
+  }
+
   return (
     <div className="app">
       <h1>Come Chat</h1>
@@ -35,12 +56,13 @@ export default function App() {
       {selectedContact === null ? (
         <ContactPanel
           contactsInfo={contactsInfo}
-          onSelectContact={setSelectedContact}
+          onSelectContact={handleSelectContact}
         />
       ) : (
         <Message
           contact={selectedContact}
-          onSelectContact={setSelectedContact}
+          onSelectContact={handleSelectContact}
+          onContactMessageEdit={handleContactMessageEdit}
         />
       )}
 
@@ -66,12 +88,8 @@ function ContactPanel({ contactsInfo, onSelectContact }) {
 }
 
 function Contact({ contact, onSelectContact }) {
-  function handleSelection() {
-    onSelectContact(contact);
-  }
-
   return (
-    <li className="contact" onClick={handleSelection}>
+    <li className="contact" onClick={() => onSelectContact(contact)}>
       <img
         src={contact.pfp}
         alt={`${contact.name} pfp`}
@@ -87,9 +105,8 @@ function Contact({ contact, onSelectContact }) {
   );
 }
 
-function Message({ contact, onSelectContact }) {
+function Message({ contact, onSelectContact, onContactMessageEdit }) {
   const locale = navigator.language;
-  console.log(locale);
   return (
     <>
       <span onClick={() => onSelectContact(null)} id="back">
@@ -114,18 +131,53 @@ function Message({ contact, onSelectContact }) {
           </span>
         </div>
       </div>
-      <ul className="message-list">
-        {contact.messages.map((message) => (
-          <li className="message" key={crypto.randomUUID()}>
-            {message}
-          </li>
-        ))}
-        {contact.replies.map((reply) => (
-          <li className="reply" key={crypto.randomUUID()}>
-            {reply}
-          </li>
-        ))}{' '}
-      </ul>
+
+      <div className="message-list">
+        <ul>
+          {contact.messages.map((message) => (
+            <li className="message" key={crypto.randomUUID()}>
+              {message}
+            </li>
+          ))}
+        </ul>
+        <ul>
+          {contact.replies.map((reply) => (
+            <li className="reply" key={crypto.randomUUID()}>
+              {reply}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <InputMessage
+        contact={contact}
+        onContactMessageEdit={onContactMessageEdit}
+      />
     </>
+  );
+}
+
+function InputMessage({ contact, onContactMessageEdit }) {
+  const [text, setText] = useState('');
+
+  function handleSubmit() {
+    if (text.length < 1) return;
+
+    onContactMessageEdit(text);
+    setText('');
+  }
+
+  return (
+    <div className="input-field">
+      <input
+        type="text"
+        placeholder="Type your message here"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+      />
+      <span>
+        <PaperPlaneTilt size={32} color="#0dc40dde" onClick={handleSubmit} />
+      </span>
+    </div>
   );
 }

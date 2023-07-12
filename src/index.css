@@ -32,6 +32,7 @@ body {
   color: #111110;
   height: 100vh;
   padding: 0 1rem;
+  overflow: hidden;
 }
 
 h1 {
@@ -45,9 +46,7 @@ h1 {
   width: 100%;
   display: grid;
   grid-template-columns: 10% 90%;
-  border: 1px solid #2f4f4f;
-  border-left: none;
-  border-right: none;
+
   padding: 1.5rem;
   transition: all 0.5s;
 }
@@ -107,6 +106,11 @@ h1 {
   font-size: 1.2rem;
 }
 
+.messages-list {
+  height: 100%;
+  overflow-y: auto;
+}
+
 .message {
   width: 50vw;
   border: 2px solid green;
@@ -120,7 +124,7 @@ h1 {
 
 .reply {
   width: 50vw;
-  background: rgba(13, 196, 13, 0.87);
+  background: #0dc40dde;
   color: ivory;
   border-radius: 3%;
   height: 10rem;
@@ -129,4 +133,28 @@ h1 {
   font-size: 1.5rem;
   margin-bottom: 3rem;
   float: right;
+}
+
+.input-field {
+  position: absolute;
+  bottom: 3rem;
+  left: 0.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-end;
+}
+
+.input-field input {
+  background: #2f4f4f;
+  border: none;
+  width: 80%;
+  padding: 1.4rem;
+  font-size: 1.5rem;
+  font-family: inherit;
+  color: ivory;
+}
+
+.input-field span {
+  cursor: pointer;
 }
