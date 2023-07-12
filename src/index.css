@@ -31,15 +31,49 @@ body {
   font-family: 'Nunito Sans Normal', sans-serif;
   color: #111110;
   height: 100vh;
-  padding: 0 1rem;
   overflow: hidden;
 }
 
-h1 {
-  font-family: 'Nunito Sans Normal', cursive;
+nav {
+  background: #c4ecec;
+  color: #111110;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+}
+
+nav h1 {
+  font-family: 'Yellowtail', cursive;
   /* text-align: center; */
   font-size: 3rem;
-  margin-bottom: 5rem;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+  margin-left: 1rem;
+}
+
+.nav-panel {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-panel li {
+  display: flex;
+  justify-content: center;
+  font-size: 1.5rem;
+  width: 100%;
+  align-self: center;
+  padding: 2rem 0.5rem;
+  transition: all 0.3s;
+}
+
+.nav-panel li.active {
+  border-bottom: 4px solid #3376f4;
+}
+
+.nav-panel li:hover {
+  cursor: pointer;
+  background: #4c5050;
+  color: ivory;
 }
 
 .contact {
@@ -59,6 +93,8 @@ h1 {
 .contact-picture {
   width: 4rem;
   border-radius: 40px;
+  float: left;
+  margin-right: 1rem;
 }
 
 .contact-details {
@@ -107,13 +143,18 @@ h1 {
   font-size: 1.2rem;
 }
 
-.messages-list {
-  height: 60vh;
+.message-list {
+  height: 80vh;
   overflow: auto;
+  padding: 0 0.8rem;
+}
+
+.reply-list {
+  float: right;
 }
 
 .message {
-  width: 50vw;
+  width: 45vw;
   border: 2px solid green;
   border-radius: 3%;
   height: 10rem;
@@ -124,7 +165,7 @@ h1 {
 }
 
 .reply {
-  width: 50vw;
+  width: 45vw;
   background: #0dc40dde;
   color: ivory;
   border-radius: 3%;
@@ -133,13 +174,16 @@ h1 {
   padding-left: 1rem;
   font-size: 1.5rem;
   margin-bottom: 3rem;
-  float: right;
 }
 
 .input-field {
   position: fixed;
-  bottom: 3rem;
-  left: 0.5rem;
+  bottom: 1rem;
+  left: 0.3rem;
+  width: 100%;
+}
+
+.input-field form {
   width: 100%;
   display: flex;
   justify-content: space-evenly;
@@ -149,13 +193,17 @@ h1 {
 .input-field input {
   background: #2f4f4f;
   border: none;
-  width: 80%;
+  width: 85%;
   padding: 1.4rem;
   font-size: 1.5rem;
   font-family: inherit;
   color: ivory;
 }
 
-.input-field span {
+.input-field button {
+  border: none;
+  background: green;
+  padding: 0.8rem;
+  border-radius: 50%;
   cursor: pointer;
 }

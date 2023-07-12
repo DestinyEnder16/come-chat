@@ -11,7 +11,7 @@ const data = [
   },
   {
     name: 'JavaScript',
-    pfp: 'css-3.png',
+    pfp: 'js-image.jpg',
     messages: ['Good morning', 'Are you listening to me?'],
     replies: ['Not really, I am at an event'],
     id: crypto.randomUUID(),
@@ -44,8 +44,6 @@ export default function App() {
           : contact
       )
     );
-
-    console.log(contactsInfo);
   }
 
   function handleSelectContact(contact) {
@@ -56,8 +54,6 @@ export default function App() {
 
   return (
     <div className="app">
-      <h1>Come Chat</h1>
-
       {selectedContact === null ? (
         <ContactPanel
           contactsInfo={contactsInfo}
@@ -77,18 +73,58 @@ export default function App() {
 }
 
 function ContactPanel({ contactsInfo, onSelectContact }) {
+  const [selectedTab, setSelectedTab] = useState(1);
+
   return (
-    <div className="sidebar">
-      <ul className="messages">
-        {contactsInfo.map((contact) => (
-          <Contact
-            contact={contact}
-            key={crypto.randomUUID()}
-            onSelectContact={onSelectContact}
-          />
-        ))}
-      </ul>
+    <div>
+      <NavPanel tab={selectedTab} onsetTab={setSelectedTab} />
+
+      {selectedTab === 1 ? (
+        <ul className="contact-panel">
+          {contactsInfo.map((contact) => (
+            <Contact
+              contact={contact}
+              key={crypto.randomUUID()}
+              onSelectContact={onSelectContact}
+            />
+          ))}
+        </ul>
+      ) : (
+        <h2>Calm down, this is not WhatsApp or something...</h2>
+      )}
     </div>
+  );
+}
+
+function NavPanel({ tab, onsetTab }) {
+  return (
+    <nav>
+      <h1>Come Chat</h1>
+
+      <ul className="nav-panel">
+        <li
+          key={crypto.randomUUID()}
+          className={tab === 1 ? 'active' : ''}
+          onClick={() => onsetTab(1)}
+        >
+          Chats
+        </li>
+        <li
+          key={crypto.randomUUID()}
+          className={tab === 2 ? 'active' : ''}
+          onClick={() => onsetTab(2)}
+        >
+          Status
+        </li>
+        <li
+          key={crypto.randomUUID()}
+          className={tab === 3 ? 'active' : ''}
+          onClick={() => onsetTab(3)}
+        >
+          Calls
+        </li>
+      </ul>
+    </nav>
   );
 }
 
@@ -116,26 +152,29 @@ function Message({ contact, onSelectContact, onContactMessageEdit }) {
   const locale = navigator.language;
   return (
     <>
-      <span onClick={() => onSelectContact(null)} id="back">
-        ←
-      </span>
       <div className="messages-panel">
-        <img
-          src={contact.pfp}
-          alt={`${contact.name} pfp`}
-          className="contact-picture"
-        />
+        <span onClick={() => onSelectContact(null)} id="back">
+          ←
+        </span>
 
-        <div className="messages-panel--details">
-          <span id="messenger">{contact.name}</span>
-          <span id="messenger-details">
-            Last seen{' '}
-            {new Date().toLocaleString(locale, {
-              weekday: 'short',
-              day: '2-digit',
-              month: 'short',
-            })}
-          </span>
+        <div>
+          <img
+            src={contact.pfp}
+            alt={`${contact.name} pfp`}
+            className="contact-picture"
+          />
+
+          <div className="messages-panel--details">
+            <span id="messenger">{contact.name}</span>
+            <span id="messenger-details">
+              Last seen{' '}
+              {new Date().toLocaleString(locale, {
+                weekday: 'short',
+                day: '2-digit',
+                month: 'short',
+              })}
+            </span>
+          </div>
         </div>
       </div>
 
@@ -147,7 +186,7 @@ function Message({ contact, onSelectContact, onContactMessageEdit }) {
             </li>
           ))}
         </ul>
-        <ul>
+        <ul className="reply-list">
           {contact.replies.map((reply) => (
             <li className="reply" key={crypto.randomUUID()}>
               {reply}
@@ -168,7 +207,8 @@ function Message({ contact, onSelectContact, onContactMessageEdit }) {
 function InputMessage({ contact, onContactMessageEdit }) {
   const [text, setText] = useState('');
 
-  function handleSubmit() {
+  function handleSubmit(e) {
+    e.preventDefault();
     if (text.length < 1) return;
 
     onContactMessageEdit(text);
@@ -177,15 +217,17 @@ function InputMessage({ contact, onContactMessageEdit }) {
 
   return (
     <div className="input-field">
-      <input
-        type="text"
-        placeholder="Type your message here"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-      />
-      <span>
-        <PaperPlaneTilt size={32} color="#0dc40dde" onClick={handleSubmit} />
-      </span>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Type your message here"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+        />
+        <button>
+          <PaperPlaneTilt size={30} color="#f5f0f0" weight="fill" />
+        </button>
+      </form>
     </div>
   );
 }
