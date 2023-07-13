@@ -165,7 +165,7 @@ nav h1 {
   content: '';
   width: 100vw;
   height: 100vh;
-  background-color: rgba(17, 17, 16, 0.695);
+  background-color: rgba(17, 17, 16, 0.8);
   z-index: 1000;
 }
 
