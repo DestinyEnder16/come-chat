@@ -33,7 +33,7 @@ button {
 /* styling */
 body {
   /* background: linear-gradient(to top right, #010, #000); */
-  background: ivory;
+  background: rgb(240, 240, 235);
   font-family: 'Titillium Web', 'Nunito Sans Normal', sans-serif;
   color: #111110;
   height: 100vh;
